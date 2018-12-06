@@ -1,0 +1,6 @@
+#session
+  h1.center Go Fish!
+
+  = form_for @user, url: sessions_path(@user) do |f|
+    = f.text_field :name, class: 'form-control', placeholder: 'Name'
+    = f.submit 'Play', class: 'form-control btn btn-primary'

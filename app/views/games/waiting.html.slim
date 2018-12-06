@@ -1,0 +1,6 @@
+- player1 = @test
+- other_players = @game.users.reject { |user| user == current_user }
+
+= react_component('PlayTurn',
+  player: player1,
+  opponents: @other_players)

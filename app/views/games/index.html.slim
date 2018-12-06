@@ -1,0 +1,23 @@
+- pending_games = @games.pending.sort_by(&:player_count)
+- finished_games = @games.pending.sort_by(&:started_at)
+
+.pending-games
+  h1.center Pending Games
+  ul
+    - pending_games.each do |game|
+      - content = "#{game.player_count} Player #{game.game_users.count}/#{game.player_count}"
+      = button_to content, game_game_users_path(game)
+
+  h2 Game history
+  table
+    tr
+      th Game ID
+      th Start Time
+      th End Time
+      th Winner
+    - @games.finished.each do |game|
+      tr class="#{game.winner_id == current_user.id ? 'winner' : 'loser'}"
+        td #{game.id}
+        td #{game.started_at}
+        td #{game.ended_at}
+        td #{game.winner.name}
