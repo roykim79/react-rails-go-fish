@@ -5,7 +5,7 @@
     "@rails/webpacker": "3.5",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "eslint": "^5.9.0",
+    "eslint": "4.x",
     "eslint-plugin-react": "^7.11.1",
     "global": "^4.3.2",
     "prop-types": "^15.6.2",
@@ -15,6 +15,7 @@
     "react_ujs": "^2.4.4"
   },
   "devDependencies": {
+    "babel-eslint": "8",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "jest": "^23.6.0",

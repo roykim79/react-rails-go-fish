@@ -1,1 +1,6 @@
-= react_component('GameView', game: @game)
+= react_component('GameView',
+    id: @game_state['id'],
+    deckCount: @game_state['deck_count'],
+    player: @game_state['player'],
+    currentPlayer: @game_state['current_player'],
+    opponents: @game_state['opponents'])

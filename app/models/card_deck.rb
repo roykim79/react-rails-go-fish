@@ -33,4 +33,21 @@ class CardDeck
   def self.full_deck
     RANKS.flat_map { |rank| SUITS.map { |suit| PlayingCard.new(rank, suit) } }
   end
+
+  class TestDeck < CardDeck
+    RANKS = %w[A K Q J].freeze
+    SUITS = %w[Spades Hearts Clubs Diamonds].freeze
+
+    def from_json(data)
+      TestDeck.new(PlayingCard.collection_from_data(data['cards']))
+    end
+
+    def initialize(cards = TestDeck.full_deck)
+      @cards = cards
+    end
+
+    def shuffle
+
+    end
+  end
 end

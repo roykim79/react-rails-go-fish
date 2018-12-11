@@ -1,6 +1,7 @@
-- player1 = @test
+- player1 = @game.users.find { |user| user == current_user }
 - other_players = @game.users.reject { |user| user == current_user }
 
-= react_component('PlayTurn',
-  player: player1,
-  opponents: @other_players)
+h1 Waiting for more players
+- other_players.each do |player|
+  span.player = player.name
+= player1.name

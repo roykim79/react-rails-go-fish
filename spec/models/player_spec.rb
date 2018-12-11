@@ -1,6 +1,3 @@
-# require 'spec_helper'
-# require'./app/models/player'
-# require './app/models/playing_card'
 require 'rails_helper'
 
 RSpec.describe Player do
@@ -126,6 +123,15 @@ RSpec.describe Player do
         return_object = Player.collection_from_data(json_players)
         expect(return_object).to be_a Array
         expect(return_object[0]).to be_instance_of Player
+      end
+    end
+
+    describe '#summary' do
+      it 'returns the summary of the players state for other players' do
+        summary = player2.summary
+        expect(summary['name']).to eq 'Jim'
+        expect(summary['card_count']).to eq 0
+        expect(summary['set_count']).to eq 0
       end
     end
   end

@@ -63,4 +63,14 @@ class Game < ApplicationRecord
     update(winner_id: go_fish.winner.user_id, ended_at: Time.zone.now) if winner_id.nil?
     go_fish.winner
   end
+
+  def state_for(user)
+    state = go_fish.state_for(user_player(user))
+    state['id'] = id
+    state
+  end
+
+  def user_player(user)
+    players.find { |player| player.user == user }
+  end
 end

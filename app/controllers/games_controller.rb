@@ -6,14 +6,23 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
+    if @game.pending?
+      @game.start
+      render :waiting
+    else
+      @game_state = @game.state_for(current_user)
+    end
+  end
+
+  def play_round
 
   end
 
-  def update
-    game = Game.find(params[:id])
-    game.play_turn(params['player_name'], params['card_rank'])
-    redirect_to game_path(game)
-  end
+  # def update
+  #   game = Game.find(params[:id])
+  #   game.play_turn(params['player_name'], params['card_rank'])
+  #   redirect_to game_path(game)
+  # end
 
   private
 

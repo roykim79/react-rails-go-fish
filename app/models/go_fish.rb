@@ -59,6 +59,19 @@ class GoFish
     )
   end
 
+  def state_for(player)
+    {
+      deck_count: deck.count,
+      player: players.find { |game_player| game_player == player }.as_json,
+      current_player: current_player.name,
+      opponents: opponent_summaries_for(player)
+    }.stringify_keys
+  end
+
+  def opponent_summaries_for(player)
+    players.reject { |game_player| game_player == player }.map(&:summary)
+  end
+
   private
 
   def player_made_set?(sets_before)
@@ -70,6 +83,6 @@ class GoFish
   end
 
   def env_deck
-    Rails.env.test? ? TestDeck.new : CardDeck.new
+    Rails.env.test? ? CardDeck::TestDeck.new : CardDeck.new
   end
 end

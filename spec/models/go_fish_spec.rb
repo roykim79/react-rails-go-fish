@@ -1,25 +1,5 @@
 require 'rails_helper'
 
-class TestDeck < CardDeck
-  RANKS = %w[A K Q J].freeze
-  SUITS = %w[Spades Hearts Clubs Diamonds].freeze
-
-  def from_json(data)
-    TestDeck.new(PlayingCard.collection_from_data(data['cards']))
-  end
-
-  def initialize(cards = TestDeck.full_deck)
-    @cards = cards
-  end
-
-  def self.full_deck
-    RANKS.flat_map { |rank| SUITS.map { |suit| PlayingCard.new(rank, suit) } }
-  end
-
-  def shuffle
-
-  end
-end
 
 RSpec.describe GoFish do
   let(:player1) { Player.new('Jim', 1) }
@@ -83,6 +63,20 @@ RSpec.describe GoFish do
       player2.take(rigged_hand2)
       rigged_game = GoFish.new([player1, player2], rigged_deck)
       expect { rigged_game.play_turn(player2, 'A') }.to change { rigged_game.winner }.to player1
+    end
+  end
+
+  describe '#state_for' do
+    it 'returns the state of the game that is relevent for the player' do
+      game.start
+      state = game.state_for(player1)
+      expect(state['deck_count']).to eq 38
+      expect(state['player']).to eq player1.as_json
+      expect(state['current_player']).to eq player1.name
+      expect(state['opponents'][0]['name']).to eq player2.name
+      expect(state['opponents'].length).to eq 1
+      expect(state['opponents'][0]['card_count']).to eq 7
+      expect(state['opponents'][0]['set_count']).to eq 0
     end
   end
 

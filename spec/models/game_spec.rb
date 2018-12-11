@@ -42,4 +42,15 @@ RSpec.describe Game, type: :model do
       expect(game.game_state).not_to be_nil
     end
   end
+
+  describe '#state_for' do
+    it 'returns the game state for the current user' do
+      game.users << user1 << user2
+      game.start
+      state = game.state_for(user1)
+      expect(state['id']).to eq(game.id)
+      expect(state['player']['name']).to eq 'Roy'
+      expect(state['opponents'][0]['name']).to eq 'John'
+    end
+  end
 end

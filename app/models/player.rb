@@ -55,6 +55,14 @@ class Player
     sets_made
   end
 
+  def summary
+    {
+      name: name,
+      card_count: card_count,
+      set_count: set_count
+    }.stringify_keys
+  end
+
   def as_json
     {
       'name' => name,
