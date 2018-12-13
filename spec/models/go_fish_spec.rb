@@ -70,9 +70,9 @@ RSpec.describe GoFish do
     it 'returns the state of the game that is relevent for the player' do
       game.start
       state = game.state_for(player1)
-      expect(state['deck_count']).to eq 38
+      expect(state['deckCount']).to eq 38
       expect(state['player']).to eq player1.as_json
-      expect(state['current_player']).to eq player1.name
+      expect(state['currentPlayer']).to eq player1.name
       expect(state['opponents'][0]['name']).to eq player2.name
       expect(state['opponents'].length).to eq 1
       expect(state['opponents'][0]['card_count']).to eq 7

@@ -26,9 +26,9 @@ describe('Player', () => {
     })
   })
 
-  describe('sets', () => {
-    it('returns the player\'s sets', () => {
-      expect(player.sets()).toEqual(sets);
+  describe('setCount', () => {
+    it('returns the player\'s set count', () => {
+      expect(player.setCount()).toEqual(sets.length);
     })
   })
 

@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import Opponent from 'models/Opponent'
 import PropTypes from 'prop-types';
 
 export default class OpponentView extends PureComponent {
@@ -11,7 +10,6 @@ export default class OpponentView extends PureComponent {
 
   constructor(props) {
     super(props)
-    this.opponent = new Opponent(this.props.opponent);
   }
 
   handleOpponentClick(name) {
@@ -19,10 +17,10 @@ export default class OpponentView extends PureComponent {
   }
 
   render() {
-    const { opponent, props } = this;
+    const { opponent, isSelected } = this.props;
 
     return (
-      <div className={props.isSelected ? 'opponent selected' : 'opponent'}
+      <div className={isSelected ? 'opponent selected' : 'opponent'}
         onClick={() => this.handleOpponentClick(opponent.name())}
       >
         <div>{opponent.name()}</div>

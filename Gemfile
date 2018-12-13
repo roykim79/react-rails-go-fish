@@ -7,6 +7,7 @@ ruby '~> 2.5.1'
 gem 'bootstrap', '~> 4.0.0'
 gem 'pg'
 gem 'puma', '~> 3.11'
+gem 'pusher'
 gem 'rails', '~> 5.2.1'
 gem 'react-rails'
 gem 'sass-rails', '~> 5.0'
@@ -37,6 +38,7 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
+  gem 'capybara-selenium'
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'

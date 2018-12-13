@@ -1,3 +1,6 @@
+import Player from './Player'
+import Opponent from './Opponent'
+
 export default class Game {
   constructor(data) {
     this._id = data.id;
@@ -16,7 +19,7 @@ export default class Game {
   }
 
   player() {
-    return this._player;
+    return new Player(this._player);
   }
 
   currentPlayer() {
@@ -24,6 +27,8 @@ export default class Game {
   }
 
   opponents() {
-    return this._opponents;
+    return this._opponents.map(opponent => {
+      return new Opponent(opponent);
+    });
   }
 }

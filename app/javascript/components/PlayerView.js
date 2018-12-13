@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Player from 'models/Player';
 import CardView from './CardView';
 
 export default class PlayerView extends PureComponent {
@@ -12,8 +11,6 @@ export default class PlayerView extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.player = new Player(this.props.player);
-    this.handleCardClick = this.props.handleCardClick;
   }
 
   handleCardClick(rank) {
@@ -21,34 +18,41 @@ export default class PlayerView extends PureComponent {
   }
 
   isCardSelected(card) {
-    const { selectedCard } = this.props,
-          { rank, suit } = card;
+    const { selectedCard } = this.props;
 
     if (selectedCard) {
-      return (`${rank}${suit}` == selectedCard.key())
+      return card.key() == selectedCard.key();
     } else {
       return false;
     }
   }
 
-  renderHand(cards) {
-    return cards.map((card, i) => (
+  renderHand = (cards) => (
+    cards.map(card => (
       <CardView
         card={card}
-        key={`card${i}`}
-        handleCardClick={this.handleCardClick}
+        key={card.key()}
+        handleCardClick={this.handleCardClick.bind(this)}
         isSelected={this.isCardSelected(card)}
-       />
-    ));
-  }
+      />
+    ))
+  );
+
+  renderSets = (sets) => (
+    sets.map((set, i) => (
+      <span className="set" key={`set${i}`}>{set}</span>
+    ))
+  );
 
   render() {
-    const { player } = this;
+    const { player } = this.props;
 
     return (
       <div className='player human'>
         <div className="">{player.name()}</div>
-        <div className="sets">Sets: {player.sets()}</div>
+        <div className="sets">
+          Sets: {player.setCount()}
+        </div>
         <div className="hand">
           {this.renderHand(player.hand())}
         </div>

@@ -7,6 +7,32 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application'
+    script src="https://js.pusher.com/4.3/pusher.min.js"
+    // javascript:
+      // Enable pusher logging - don't include this in production
+      // Pusher.logToConsole = true;
+      //
+      // var pusher = new Pusher('656e007150142d5db2c4', {
+      //   cluster: 'us2',
+      //   forceTLS: true
+      // });
+      //
+      // var channel = pusher.subscribe('go-fish');
+      //
+      // channel.bind('pusher:subscription_succeeded', function() {});
+      //
+      // channel.bind('game-starting', function(data) {
+      //   if (window.location.pathname == `/games/${data.gameId}`) {
+      //     window.location.reload();
+      //   }
+      // });
+      //
+      // channel.bind('round-played', function(data) {
+      //   if (window.location.pathname == `/games/${data.gameId}`) {
+      //     window.location.reload();
+      //   }
+      // });
+
   body
     .container
       = yield

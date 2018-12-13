@@ -1,6 +1,7 @@
 = react_component('GameView',
     id: @game_state['id'],
-    deckCount: @game_state['deck_count'],
+    deckCount: @game_state['deckCount'],
     player: @game_state['player'],
-    currentPlayer: @game_state['current_player'],
-    opponents: @game_state['opponents'])
+    currentPlayer: @game_state['currentPlayer'],
+    opponents: @game_state['opponents'],
+    winner: @game_state['winner'])

@@ -7,11 +7,11 @@ import CardView from 'components/CardView'
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('CardView', () => {
-  const cardData = {rank: 'A', suit: 'S'},
+  const card = new PlayingCard({rank: 'A', suit: 'S'}),
         handleCardClick = jest.fn(),
         shallowView = () => shallow(
           <CardView
-            card={cardData}
+            card={card}
             handleCardClick={handleCardClick}
             isSelected={false}
           />

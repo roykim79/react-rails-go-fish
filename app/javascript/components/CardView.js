@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import PlayingCard from 'models/PlayingCard'
 
 export default class CardView extends PureComponent {
   static propTypes = {
@@ -11,7 +10,6 @@ export default class CardView extends PureComponent {
 
   constructor(props) {
     super(props)
-    this.card = new PlayingCard(this.props.card)
   }
 
   handleCardClick(cardKey) {
@@ -19,13 +17,12 @@ export default class CardView extends PureComponent {
   }
 
   render() {
-    const { card, props } = this;
+    const { card, isSelected } = this.props;
 
     return (
-      <div className={props.isSelected ? 'visible-card selected' : 'visible-card'}
+      <div className={isSelected ? 'visible-card selected' : 'visible-card'}
         onClick={() => this.handleCardClick(card)}
-        key={card.rank() + card.suit()}
-        id={card.rank() + card.suit()}
+        key={card.key()}
       >
         {card.rank()}
       </div>

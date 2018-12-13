@@ -1,3 +1,5 @@
+import PlayingCard from './PlayingCard'
+
 export default class Player {
   constructor(data) {
     this._name = data.name;
@@ -16,11 +18,11 @@ export default class Player {
   }
 
   hand() {
-    return this._hand;
+    return this._hand.map(card => new PlayingCard(card));
   }
 
-  sets() {
-    return this._sets;
+  setCount() {
+    return this._sets.length;
   }
 
   autoplay() {

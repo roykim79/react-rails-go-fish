@@ -61,10 +61,11 @@ class GoFish
 
   def state_for(player)
     {
-      deck_count: deck.count,
+      deckCount: deck.count,
       player: players.find { |game_player| game_player == player }.as_json,
-      current_player: current_player.name,
-      opponents: opponent_summaries_for(player)
+      currentPlayer: current_player.name,
+      opponents: opponent_summaries_for(player),
+      winner: winner
     }.stringify_keys
   end
 
