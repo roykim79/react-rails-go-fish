@@ -28,7 +28,9 @@ export default class PlayerView extends PureComponent {
   }
 
   renderHand = (cards) => (
-    cards.map(card => (
+    cards.sort((a, b) => {
+      return b.rank() < a.rank();
+    }).map(card => (
       <CardView
         card={card}
         key={card.key()}

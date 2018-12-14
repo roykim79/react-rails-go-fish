@@ -35,8 +35,6 @@ RSpec.describe 'Games', type: :system do
   end
 
   context 'with multiple sessions', js: true do
-    # let(:session1) { Capybara::Session.new(:rack_test, Rails.application) }
-    # let(:session2) { Capybara::Session.new(:rack_test, Rails.application) }
     let(:session1) { Capybara::Session.new(:selenium_chrome_headless, app) }
     let(:session2) { Capybara::Session.new(:selenium_chrome_headless, app) }
     let(:sessions) { [session1, session2] }
@@ -44,8 +42,8 @@ RSpec.describe 'Games', type: :system do
     def play_turns(ranks)
       ranks.each do |rank|
         session1.find('.opponent').click
-        session1.first('.visible-card').click
-        # session1.click_button rank, match: :first
+        session1.first("[data-rank=#{rank}]").click
+        sleep(2.5)
       end
     end
 
@@ -70,18 +68,10 @@ RSpec.describe 'Games', type: :system do
       expect(session1).to have_css '.opponent', count: 1
     end
 
-    it 'allows the player to play a turn' do
-      # session1.choose 'Player 2'
-      # session1.click_button 'A', match: :first
-      # expect(session1).not_to have_css 'input'
-      # session2.driver.refresh
-      # expect(session2).to have_css 'input'
-    end
-#
     it 'will display the winning template when the game has been won' do
       play_turns(%w[J Q K A])
+      sleep(2.5)
       sessions.each { |session| expect(session).to have_content 'Game over' }
-      sessions.each { |session| expect(session).to have_content 'Player 1' }
       expect(Game.finished.count).to eq 1
       expect(Game.finished.first.winner.name).to eq 'Player 2'
     end

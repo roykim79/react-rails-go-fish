@@ -26,7 +26,7 @@ describe('CardView', () => {
         mountView = (data) => mount(<GameView {...data}/>);
 
   describe('when the player is the current player', () => {
-    beforeEach(() => {wrapper = mountView(currentPlayerData)})
+    beforeEach(() => wrapper = mountView(currentPlayerData))
 
     describe('handleOpponentClick', () => {
       it('updates the selectedOpponentName value in state', () => {
@@ -52,7 +52,7 @@ describe('CardView', () => {
   describe('when the player is not the current player', () => {
     const notCurrentPlayerData = Object.assign({}, currentPlayerData, {currentPlayer: 'John'});
 
-    beforeEach(() => {wrapper = mountView(notCurrentPlayerData)});
+    beforeEach(() => wrapper = mountView(notCurrentPlayerData));
 
     describe('handleOpponentClick', () => {
       it('does nothing if the player is not the current player', () => {

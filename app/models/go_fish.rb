@@ -33,6 +33,17 @@ class GoFish
     end
 
     next_player unless current_player.check_for_sets
+    play_for_bot
+  end
+
+  def play_for_bot
+    return unless current_player.autoplay
+
+    play_turn(pick_target, current_player.pick_rank)
+  end
+
+  def pick_target
+    players.reject { |player| player == current_player }.sample
   end
 
   def winner
@@ -64,8 +75,7 @@ class GoFish
       deckCount: deck.count,
       player: players.find { |game_player| game_player == player }.as_json,
       currentPlayer: current_player.name,
-      opponents: opponent_summaries_for(player),
-      winner: winner
+      opponents: opponent_summaries_for(player)
     }.stringify_keys
   end
 

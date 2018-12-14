@@ -4,5 +4,6 @@ FactoryBot.define do
     ended_at { nil }
     player_count { 2 }
     winner_id { nil }
+    game_state {}
   end
 end

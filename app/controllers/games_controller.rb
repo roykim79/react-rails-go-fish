@@ -21,15 +21,13 @@ class GamesController < ApplicationController
       if @game.pending?
         render :waiting
       else
-        # @@pusher_client.trigger('go-fish', 'game-starting', gameId: params[:id])
-        # @game_state = @game.state_for(current_user)
         redirect_to @game
       end
     else
       @game_state = @game.state_for(current_user)
       respond_to do |format|
-        format.html 
-        format.json { render json: @game.state_for(current_user) }
+        format.html
+        format.json { render json: @game_state }
       end
     end
   end
@@ -38,11 +36,11 @@ class GamesController < ApplicationController
     game = Game.find(params[:id])
     game.play_turn(params['selectedOpponentName'], params['rank'])
     @@pusher_client.trigger('go-fish', 'round-played', gameId: params[:id])
-
+    game_state = game.state_for(current_user)
     respond_to do |format|
-      format.json { render json: game.state_for(current_user) }
+      # format.html { redirect_to game }
+      format.json { render json: game_state }
     end
-    # render json: game.state_for(current_user)
   end
 
   private

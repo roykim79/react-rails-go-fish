@@ -46,6 +46,10 @@ class CardDeck
       @cards = cards
     end
 
+    def self.full_deck
+      RANKS.flat_map { |rank| SUITS.map { |suit| PlayingCard.new(rank, suit) } }
+    end
+
     def shuffle
 
     end

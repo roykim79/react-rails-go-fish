@@ -23,6 +23,7 @@ export default class CardView extends PureComponent {
       <div className={isSelected ? 'visible-card selected' : 'visible-card'}
         onClick={() => this.handleCardClick(card)}
         key={card.key()}
+        data-rank={card.rank()}
       >
         {card.rank()}
       </div>

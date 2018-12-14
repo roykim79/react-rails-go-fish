@@ -41,6 +41,26 @@ RSpec.describe GoFish do
     end
   end
 
+  describe '#pick_target' do
+    it 'returns a random player that is not the current player' do
+      expect(game.current_player).to be player1
+      expect(game.pick_target).to be player2
+    end
+  end
+
+  describe '#play_for_bot' do
+    it 'plays for the current player if they have autoplay set to true' do
+      game.start
+      player1.toggle_autoplay
+      expect { game.play_for_bot }.to change(player1, :card_count)
+    end
+
+    it 'does nothing if the current player is not a robot' do
+      game.start
+      expect { game.play_for_bot }.not_to change(player1, :card_count)
+    end
+  end
+
   describe '#winner' do
     it 'is nill at first' do
       game.start
@@ -70,7 +90,7 @@ RSpec.describe GoFish do
     it 'returns the state of the game that is relevent for the player' do
       game.start
       state = game.state_for(player1)
-      expect(state['deckCount']).to eq 38
+      expect(state['deckCount']).to eq 2
       expect(state['player']).to eq player1.as_json
       expect(state['currentPlayer']).to eq player1.name
       expect(state['opponents'][0]['name']).to eq player2.name

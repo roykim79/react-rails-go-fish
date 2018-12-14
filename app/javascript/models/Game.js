@@ -8,6 +8,7 @@ export default class Game {
     this._player = data.player;
     this._currentPlayer = data.currentPlayer;
     this._opponents = data.opponents;
+    this._winner = data.winner;
   }
 
   id() {
@@ -30,5 +31,9 @@ export default class Game {
     return this._opponents.map(opponent => {
       return new Opponent(opponent);
     });
+  }
+
+  winner() {
+    return this._winner;
   }
 }

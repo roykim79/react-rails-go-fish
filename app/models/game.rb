@@ -61,12 +61,13 @@ class Game < ApplicationRecord
     return unless go_fish.winner
 
     update(winner_id: go_fish.winner.user_id, ended_at: Time.zone.now) if winner_id.nil?
-    go_fish.winner
+    go_fish.winner.name
   end
 
   def state_for(user)
     state = go_fish.state_for(user_player(user))
     state['id'] = id
+    state['winner'] = winning_player
     state
   end
 

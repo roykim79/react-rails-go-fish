@@ -15,7 +15,7 @@ export default class GameView extends React.Component {
     player: PropTypes.object.isRequired,
     currentPlayer: PropTypes.string.isRequired,
     opponents: PropTypes.array.isRequired,
-    winner: PropTypes.object
+    winner: PropTypes.string
   };
 
   constructor(props) {
@@ -36,12 +36,6 @@ export default class GameView extends React.Component {
 
     channel.bind('pusher:subscription_succeeded', () => {});
 
-    // channel.bind('game-starting', (data) => {
-    //   if (window.location.pathname == `/games/${data.gameId}`) {
-    //     window.location.reload();
-    //   }
-    // });
-
     channel.bind('round-played', (data) => {
       if (window.location.pathname == `/games/${data.gameId}`) {
         this.fetchGame(data.gameId);
@@ -51,13 +45,10 @@ export default class GameView extends React.Component {
 
   fetchGame(gameId) {
     fetch(`/games/${gameId}`, this.fetchOptions('GET'))
-    .then(res => {
-      debugger;
-      res.json()}).then(result => {
-      console.log("Result", result)
-
+    .then(res => res.json()).then(result => {
       this.updateGameState(result);
     }, (error) => {
+      console.log(error);
     });
   }
 
@@ -87,30 +78,22 @@ export default class GameView extends React.Component {
     const { game, selectedOpponentName, selectedCard } = this.state;
 
     if (selectedOpponentName && selectedCard) {
-      fetch(`/games/${game.id()}`, this.fetchOptions('PATCH', {selectedOpponentName, rank: selectedCard.rank()}))
-      .then(res => {
-        res.json()
-      }).then(result => {
+      fetch(`/games/${game.id()}`,
+      this.fetchOptions('PATCH', {selectedOpponentName, rank: selectedCard.rank()}))
+      .then(res => res.json()).then(result => {
         this.updateGameState(result);
       }, () => {
+        console.log(error);
       });
     }
   }
 
-  // fetchOptions = (method, body) => ({
-  //   method,
-  //   body: JSON.stringify(body),
-  //   headers:{'Content-Type': 'application/json', 'Accepts': 'application/json'}
-  // });
-
   fetchOptions(method, body) {
     const options = {
       method,
-      headers:{'Content-Type': 'application/json', 'Accepts': 'application/json'}
+      headers:{'Content-Type': 'application/json', 'Accept': 'application/json'}
     }
-    if (body) {
-      return Object.assign({}, options, {body: JSON.stringify(body)});
-    }
+    if (body) return Object.assign({}, options, {body: JSON.stringify(body)});
 
     return options;
   }
@@ -132,24 +115,40 @@ export default class GameView extends React.Component {
     ))
   );
 
+  renderWinView(winnerName) {
+    return (
+      <div>
+        Game over {winnerName} won!
+      </div>
+    )
+  }
+
   render() {
     const { game } = this.state;
 
-    return (
-      <div id='game-view'>
-        <div>Current player: {game.currentPlayer()}</div>
-        <div className="opponents">{this.renderOpponents(game.opponents())}</div>
-        <div className="row">
-          <div className="card-count">{game.deckCount()}</div>
+    if (game.winner()) {
+      return (
+        <div>
+          {this.renderWinView(game.winner())}
         </div>
-        <div className="row">
-          <PlayerView
-            player={game.player()}
-            handleCardClick={this.handleCardClick.bind(this)}
-            selectedCard={this.state.selectedCard}
-          />
+      );
+    } else {
+      return (
+        <div id='game-view'>
+          <div>Current player: {game.currentPlayer()}</div>
+          <div className="opponents">{this.renderOpponents(game.opponents())}</div>
+          <div className="row">
+            <div className="card-count">{game.deckCount()}</div>
+          </div>
+          <div className="row">
+            <PlayerView
+              player={game.player()}
+              handleCardClick={this.handleCardClick.bind(this)}
+              selectedCard={this.state.selectedCard}
+            />
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }

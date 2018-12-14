@@ -6,7 +6,8 @@ describe('Game', () => {
         player = {},
         currentPlayer = 'Roy',
         opponents = [],
-        game = new Game({id, deckCount, player, currentPlayer, opponents});
+        winner = 'Roy',
+        game = new Game({id, deckCount, player, currentPlayer, opponents, winner});
 
   describe('id', () => {
     it('returns the game id', () => {
@@ -35,6 +36,12 @@ describe('Game', () => {
   describe('opponents', () => {
     it('returns an array of opponent objects', () => {
       expect(game.opponents()).toEqual(opponents);
+    })
+  })
+
+  describe('winner', () => {
+    it('returns the winning players name', () => {
+      expect(game.winner()).toEqual(winner)
     })
   })
 })
